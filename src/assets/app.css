@@ -1,0 +1,42 @@
+.fc-light {
+    color: white;
+}
+
+a:hover.fc-light{
+    color: white;
+}
+
+.whiteboard {
+    background-color: white;
+}
+
+.runner-item {
+    padding-right: 2pt;
+    font-size: x-large;
+    text-decoration: grey;
+}
+
+.runner-item.current {
+    text-decoration: blueviolet underline;
+}
+
+.runnerContainer{
+    background-color: lightgrey;
+    min-height: 100px;
+    padding: 1em;
+    border-left: darkblue;
+    border-right: darkblue;
+    border-radius: 5pt;
+    border-width: 0 medium 0 medium;
+    border-style: solid;
+}
+
+
+.iconPadding{
+    padding-right: 20px;
+}
+
+.no-outline{
+    outline: none;
+}
+

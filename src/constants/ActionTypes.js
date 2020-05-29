@@ -1,0 +1,10 @@
+export const INIT = 'INIT'
+export const INIT_SUCCESS = 'INIT_SUCCESS'
+export const LOGIN_REQUEST = 'LOGIN_REQUEST'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGOUT = 'LOGOUT'
+export const KEY_PRESSED = "KEY_PRESSED"
+export const START_COURSE = "START_COURSE"
+export const START_TYPING = "START_TYPING"
+export const SHOW_ADD_EXCERCISE = "SHOW_ADD_EXCERCISE"
+export const ADD_CUSTOM_EXERCISE = "ADD_CUSTOM_EXERCISE"
