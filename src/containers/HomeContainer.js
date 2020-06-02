@@ -1,24 +1,30 @@
 import { connect } from 'react-redux'
 import Home from '../components/home'
-import {initApp, keyPressedEvent, startCourse, startTyping, showAddExcercise, addCustomExcercise} from '../actions/action'
+import {initApp, keyPressedEvent, startCourse, startTyping, showAddExcercise, addCustomExcercise, updateTimePassed, switchMode} from '../actions/action'
 
 const mapStateToProps = (state, ownProps) => ({
   courseArr: state.courses.courses,
   runnerArr: state.exercise.content,
   excerciseProgress: state.exercise.progress,
   showAddExercise: state.courses.showAddExercise,
-  customExcercise: state.courses.customExcercise
+  customExcercise: state.courses.customExcercise,
+  timeMode: state.exercise.timeMode,
+  time: state.exercise.time,
+  words: state.exercise.words
 })
 
 
 const registerforKeyPress = (dispatch) => {
-  console.log("registerforKeyPress");
   document.addEventListener("keypress", e => {
-    console.log("onkeypress",e.charCode);
     dispatch(keyPressedEvent(e.charCode));
     e.preventDefault();
   })
 };
+
+var timer;
+const updateTime = (dispatch,time) => {
+  timer = setInterval(dispatch => {dispatch(updateTimePassed())}, 1000, dispatch, time);
+} 
 
 const courseClickHandler = (dispatch, course) => {
   course.title === "Add Custom Excercise" ? 
@@ -32,12 +38,17 @@ const mapDispatchToProps = dispatch => ({
     registerforKeyPress(dispatch)
   },
   courseClickHandler: (course) => courseClickHandler(dispatch, course),
-  startPracticeHandler: () => dispatch(startTyping()),
+  startExcercise: (startParam) => {
+    if(startParam.timeMode) 
+      updateTime(dispatch, startParam.time);
+    dispatch(startTyping(startParam))},
   onAddExcerciseSubmit: course => {
     dispatch(showAddExcercise(false));
     dispatch(addCustomExcercise(course));
   },
-  onAddExcerciseClose: () => dispatch(showAddExcercise(false))
+  onAddExcerciseClose: () => dispatch(showAddExcercise(false)),
+  stopExcercise:() => clearInterval(timer),
+  switchBoundaryMode :(mode) => dispatch(switchMode(mode))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -1,17 +1,17 @@
 [
   {"group":"Warm Up","category": [
-    {"id": 1, "title": "Home Row", "category": "practice", "content": [{"char":"w","id":0},{"char":"o","id":1},{"char":"r","id":2},{"char":"l","id":3},{"char":"d","id":4}]},
-    {"id": 4, "title": "Home Row + numbers", "category": "practice", "content": [{"char":"h","id":0},{"char":"e","id":1},{"char":"l","id":2},{"char":"l","id":3},{"char":"o","id":4}]}
+    {"id": 1, "title": "Home Row", "category": "practice", "contentString": "hello my dear hope you are doing great"},
+    {"id": 4, "title": "Home Row + numbers", "category": "practice", "contentString": "Home Row numbers hello my dear hope you are doing great"}
   ]},
   {"group":"Finger Practice","category": [
-    {"id": 2, "title": "Above Row", "category": "beginner", "content": [{"char":"h","id":0},{"char":"e","id":1},{"char":"l","id":2},{"char":"l","id":3},{"char":"o","id":4}]},
-    {"id": 5, "title": "Above Row left hand", "category": "beginner", "content": [{"char":"h","id":0},{"char":"e","id":1},{"char":"l","id":2},{"char":"l","id":3},{"char":"o","id":4}]}
+    {"id": 2, "title": "Above Row", "category": "beginner", "contentString": "hello1"},
+    {"id": 5, "title": "Above Row left hand", "category": "beginner", "contentString": "hello2"}
   ]},
   {"group":"Word Practice","category": [
-    {"id": 3, "title": "Below Row", "category": "advanced", "content": [{"char":"h","id":0},{"char":"e","id":1},{"char":"l","id":2},{"char":"l","id":3},{"char":"o","id":4}]}
+    {"id": 3, "title": "Below Row", "category": "advanced", "contentString": "brother"}
   ]},
   {"group":"Custom Excercises","category": [
-    {"id": 6, "title": "Add Custom Excercise", "category": "custom", "content": [{"char":"h","id":0},{"char":"e","id":1},{"char":"l","id":2},{"char":"l","id":3},{"char":"o","id":4}]},
-    {"id": 7, "title": "Custom1", "category": "custom", "content": [{"char":"h","id":0},{"char":"e","id":1},{"char":"l","id":2},{"char":"l","id":3},{"char":"o","id":4}]}
+    {"id": 6, "title": "Add Custom Excercise", "category": "custom", "contentString": "thank you"},
+    {"id": 7, "title": "Custom1", "category": "custom", "contentString": "halo game"}
   ]}
 ]

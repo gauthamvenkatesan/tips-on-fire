@@ -9,7 +9,6 @@ const session = (state = initialState, action) => {
   console.log("session reducer", action.type);
   switch (action.type) {
     case LOGIN_SUCCESS:
-      console.log("LOGIN", state);
       return {...state,username:"Gautham Venkatesan", loggedIn: true};
     case LOGOUT:
       return initialState;

@@ -19,7 +19,6 @@ const store = createStore(reducer, composeEnhancers(
  ));
 
 
-
 render(
   <Provider store={store}>
     <App />

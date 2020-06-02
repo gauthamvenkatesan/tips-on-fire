@@ -13,16 +13,20 @@ a:hover.fc-light{
 .runner-item {
     padding-right: 2pt;
     font-size: x-large;
-    text-decoration: grey;
+    text-decoration: black;
 }
 
 .runner-item.current {
-    text-decoration: blueviolet underline;
+    background-color:tomato;
+    text-decoration: white underline;
 }
 
 .runnerContainer{
+    display: inline-block;
     background-color: lightgrey;
     min-height: 100px;
+    max-width: 100%;
+    width: 100%;
     padding: 1em;
     border-left: darkblue;
     border-right: darkblue;

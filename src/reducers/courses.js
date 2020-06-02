@@ -8,7 +8,6 @@ const initialState = {showAddExercise: false,customExcercise: {title: "", conten
 ]}]};
 
 const courses = (state = initialState, action) => {
-  console.log("courseReducer", action, state);
   switch (action.type) {
     case INIT:
       return state;
@@ -21,27 +20,21 @@ const courses = (state = initialState, action) => {
       let contentArr = [];
       let tempCourses = Array.from(state.courses);
       tempCourses.map(course => course.category.map( () => courseCount++));
-
-      console.log("courseCOunt", courseCount);
       let content = [...action.course.content];
-
-      console.log("content", content);
       for(let i=0; i < content.length ; i++){
         contentArr.push({
           char: content[i],
           id: i
         });
       };
-      console.log("contentArr", contentArr);
-      console.log("tempCourses",tempCourses);
       let customCourse = {id: `${courseCount+1}`, title: `${action.course.title}`, category: "custom", content: contentArr};
       let modifiedCourses = tempCourses.map(course => {
         if(course.group === "Custom Excercises") {
-          console.log("1",course); course.category.push(customCourse); console.log("2",course); }
+           course.category.push(customCourse);
+        }
         return course;  
       })
 
-      console.log("modifiedCourses", modifiedCourses);
       return {...state,courses: modifiedCourses};
     default:
       return state;

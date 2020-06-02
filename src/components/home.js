@@ -15,20 +15,21 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 class home extends React.Component {
 
   componentDidMount(){
-    console.log("home component component did mount",this.props);
     this.props.initApp();
   }
 
   render(){
-    console.log("home component",this.props);
     let id =0;
+    let time = this.props.time;
+    let words = this.props.words;
+    let timeMode = this.props.timeMode;
+    if (this.props.excerciseProgress.status === "completed") this.props.stopExcercise();
     return (
       <Container className="p-5">
         <AddExcercise show={this.props.showAddExercise} onHide={this.props.onAddExcerciseClose} onAddExcerciseSubmit={this.props.onAddExcerciseSubmit} customexcercise={this.props.customExcercise}></AddExcercise>
         <Jumbotron tabIndex="1"   className={`no-outline ${this.props.excerciseProgress.status === "inprogress" ? "" : "d-none"} whiteboard`}>
           <Container>
             <div className="runnerContainer">
-              {console.log("excerciseProgress",this.props, this.props.runnerArr)}
               {this.props.runnerArr.map( item => <span key={item.id} className={`runner-item ${this.props.excerciseProgress.currentItemId === item.id ? "current" : ""}`}>{item.char}</span> )}
             </div>
             <br/>
@@ -43,25 +44,27 @@ class home extends React.Component {
         <Jumbotron className={`${this.props.excerciseProgress.status === "start" ? "" : "d-none"} whiteboard`}>
           <Container>
             <Form>
-              <Form.Group  as={Row} controlId="formBasicRange">
+              <Form.Group controlId="time" onMouseUp={(e) => this.props.switchBoundaryMode(e.target.id)}  as={Row} >
                 <Form.Label column lg={1} >Time</Form.Label>
                 <Col lg={2}>
-                  <Form.Control disabled={!this.props.excerciseProgress.timeMode} as="select" defaultValue="3 Mins">
+                  <Form.Control  disabled={!this.props.timeMode} as="select" disabled={!this.props.timeMode} onChange={(e) => time = e.target.value} defaultValue={this.props.time} >
                     <option>1</option>
                     <option>3</option>
                   </Form.Control>
                 </Col>
                 </Form.Group>
-                <Form.Group   as={Row}>
+                <Form.Group  controlId="words" onMouseUp={(e) => this.props.switchBoundaryMode(e.target.id)}  as={Row}>
                   <Form.Label column lg={1}>Strokes</Form.Label>
                   <Col lg={2}>
-                    <Form.Control  onFocus={() => console.log("Strokes click")} disabled={this.props.excerciseProgress.timeMode} as="select" defaultValue="500">
+                    <Form.Control  onChange={(e) => words = e.target.value} disabled={this.props.timeMode} as="select" defaultValue={this.props.time}>
+                      <option>10</option>
+                      <option>21</option>
                       <option>500</option>
                       <option>1000</option>
                     </Form.Control>
                   </Col>
               </Form.Group>
-              <Button onClick={this.props.startPracticeHandler}>Start Practice</Button>
+              <Button onClick={() => this.props.startExcercise({time, words, timeMode})} >Start Practice</Button>
             </Form>
           </Container>
         </Jumbotron>
@@ -74,10 +77,12 @@ class home extends React.Component {
             <h3>Total time: {Number.parseFloat(this.props.excerciseProgress.timeInMinutes).toPrecision(2)}</h3>
             <h3>Speed: {Math.round(this.props.runnerArr.length/this.props.excerciseProgress.timeInMinutes)}</h3>
             <h3>Accuracy: {Math.round(((this.props.runnerArr.length-this.props.excerciseProgress.mistakes)/this.props.runnerArr.length)*100)}</h3>
+            <Button onClick={() => this.props.startExcercise({time, words, timeMode})}>Restart</Button>
           </Container>
         </Jumbotron>
 
         <Alert variant="warning"> Welcome! Are you ready to set your fingers on fire !!</Alert>
+        <h6>Exercise Progress: {JSON.stringify(this.props.excerciseProgress)}</h6>
         <Accordion defaultActiveKey="0">
           {this.props.courseArr.map(e => { return (
           <Card key={id++}>

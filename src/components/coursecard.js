@@ -1,13 +1,18 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Octicon, {Skip, Play, Plus} from '@primer/octicons-react'
 
-const coursecard = ({courseArr, OnClickHandler, inProgressCourseId}) => {
+function coursecard ({courseArr, OnClickHandler, inProgressCourseId}) {
+
+  /*useEffect (() => {
+    window.scrollTo(0,0)
+  },[])*/
+
   return (
     <ListGroup as="ul">
         {courseArr.map( courseObj => { return courseObj.title === "Add Custom Excercise" ? 
-          (<ListGroup.Item variant="primary" action key={courseObj.id} onClick={() => OnClickHandler(courseObj)}>
+          (<ListGroup.Item variant="primary" action key={courseObj.id} onClick={() =>{window.scrollTo(0, 0); OnClickHandler(courseObj)}}>
             <Octicon  icon={Plus} aria-label="start" verticalAlign="middle" size="medium"/> 
             {`    ${courseObj.title}`}
             </ListGroup.Item> ) 

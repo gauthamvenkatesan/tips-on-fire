@@ -8,7 +8,6 @@ const LoginContainer = ({dispatch, loggedIn}) => (
   <Login loggedIn={loggedIn} onClick={
       e => {
         e.preventDefault();
-        console.log(e);
         loginUser(dispatch, e)
         } 
     }/>

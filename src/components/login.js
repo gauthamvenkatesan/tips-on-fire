@@ -7,7 +7,6 @@ import Media from 'react-bootstrap/Media'
 import lockIcon from '../assets/lock.svg'
 
 const login = ({onClick, loggedIn}) => {
-    console.log("loggedin", loggedIn);
     if(loggedIn){
         return <Redirect to="/"></Redirect>
     }

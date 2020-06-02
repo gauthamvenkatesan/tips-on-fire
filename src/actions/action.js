@@ -4,21 +4,28 @@ import * as types from '../constants/ActionTypes'
 import api from '../api/backend'
 
 export const loginUser = (dispatch,user) => {
-  console.log("LoginUser dispatched", dispatch);
   dispatch({type: types.LOGIN_REQUEST, user})
   api.requestLogin(dispatch, loginSuccessHandler,user,1000);
 }
 
-export const startTyping = () => {
-  return {type: types.START_TYPING}
+export const startTyping = (param) => {
+  return {type: types.START_TYPING, param}
 }
 
 export const showAddExcercise =(show) => {
   return {type: types.SHOW_ADD_EXCERCISE, show}
 }
 
+export const updateTimePassed =() => {
+  return {type: types.UPDATE_TIME_PASSED}
+}
+
 export const addCustomExcercise = (course) => {
   return {type: types.ADD_CUSTOM_EXERCISE, course}
+}
+
+export const switchMode = (mode) => {
+  return {type: types.SWITCH_BOUNDARY_MODE, mode}
 }
 
 export const startCourse = (course) => {
@@ -33,13 +40,11 @@ export const keyPressedEvent = (key) => {
 }
 
 export const initApp = dispatch => {
-  console.log("initApp action ", dispatch);
   api.getCourses(dispatch, appInitHandler,1000);
   return {type: types.INIT}
 }
 
 const appInitHandler = (dispatch, initData) => {
-  console.log("appInitHandler");
   dispatch({type: types.INIT_SUCCESS, initData})
 }
 
