@@ -1,17 +1,17 @@
 [
   {"group":"Warm Up","category": [
-    {"id": 1, "title": "Home Row", "category": "practice", "contentString": "hello my dear hope you are doing great"},
-    {"id": 4, "title": "Home Row + numbers", "category": "practice", "contentString": "Home Row numbers hello my dear hope you are doing great"}
+    {"id": 1, "title": "Home Row", "category": "practice", "contentString": "hello hope you are doing great"},
+    {"id": 4, "title": "Home Row + numbers", "category": "practice", "contentString": "Home Row numbers hello hope you are doing great"}
   ]},
   {"group":"Finger Practice","category": [
-    {"id": 2, "title": "Above Row", "category": "beginner", "contentString": "hello1"},
-    {"id": 5, "title": "Above Row left hand", "category": "beginner", "contentString": "hello2"}
+    {"id": 2, "title": "Above Row", "category": "beginner", "contentString": "abhr htyu owerasdfl ljsadf asfj sdfajljowe sdafljasfow"},
+    {"id": 5, "title": "Above Row left hand", "category": "beginner", "contentString": "abhr htyu owerasdfl ljsadf asfj sdfajljowe sdafljasfow"}
   ]},
   {"group":"Word Practice","category": [
-    {"id": 3, "title": "Below Row", "category": "advanced", "contentString": "brother"}
+    {"id": 3, "title": "Below Row", "category": "advanced", "contentString": "Row below word practice hello hope you are doing great"}
   ]},
   {"group":"Custom Excercises","category": [
-    {"id": 6, "title": "Add Custom Excercise", "category": "custom", "contentString": "thank you"},
+    {"id": 6, "title": "Add Custom Excercise", "category": "custom", "contentString": "Custom Excercises hello hope you are doing great"},
     {"id": 7, "title": "Custom1", "category": "custom", "contentString": "halo game"}
   ]}
 ]

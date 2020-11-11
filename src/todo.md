@@ -1,5 +1,7 @@
 TODO::
-
+Profile Page
+Load proper exercise test data 
+Spring server side login
 Show hide runner settings
 Enable capitalize option in runner settings
 Without user login (Save user progress and settings in browser storage, if this data is available pull up this on page load)
