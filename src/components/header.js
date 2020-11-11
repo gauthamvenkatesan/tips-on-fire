@@ -7,10 +7,10 @@ import {Link}  from 'react-router-dom'
 import typeWriter from '../assets/typeWriter.svg'
 import PropTypes from 'prop-types'
 
-const header = ({username}) => (
+const header = (props) => (
 
 <Navbar bg="dark" variant="dark" expand="lg">
-  <Navbar.Brand href="/home">
+  <Navbar.Brand >
   <img
       src={typeWriter}
       width="30"
@@ -28,17 +28,16 @@ const header = ({username}) => (
   </Nav>
   <Form inline className="pr-5">
     <Form.Text className="pr-3 light">
-      <Link className="fc-light" to='/profile'>{username}</Link>
+      <Link className="fc-light" to='/profile'>{props.username}</Link>
     </Form.Text>
-    <Button onClick={showLogin} variant="primary" size="sm">Login</Button>
+    <Button variant="primary" size="sm">
+      <Link className="fc-light" to='/login'>{props.loggedIn ? 'Log out': 'Login'}</Link>
+    </Button>
   </Form>
 </Navbar.Collapse>
 </Navbar>
 )
 
-const showLogin = () => {
-  window.location= "/login";
-}
 
 header.prototype = {
   username: PropTypes.string.isRequired

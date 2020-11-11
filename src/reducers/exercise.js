@@ -35,7 +35,7 @@ const getContentObj = (contentString, limit, currentId=0, contentConsumedIndex=0
       }
     }
   }
-  
+  runnerContent = runnerContent.trim();
   let content = [...runnerContent];
   for(let i=0; i < content.length ; i++){
     contentArr.push({
