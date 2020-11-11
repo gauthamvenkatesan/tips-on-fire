@@ -23,7 +23,7 @@ const header = ({username}) => (
 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 <Navbar.Collapse id="basic-navbar-nav">
   <Nav className="mr-auto">
-    <Nav.Link as={Link} to="/">Home</Nav.Link>
+    <Nav.Link as={Link} to="/home">Home</Nav.Link>
     <Nav.Link as={Link} to="/help">Help</Nav.Link>
   </Nav>
   <Form inline className="pr-5">

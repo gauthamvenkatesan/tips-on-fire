@@ -12,34 +12,51 @@ const initialState = {  progress: {courseId: 0,enteredChar: '',currentItemId : 0
                       }
 const runnerLimit = 100;
 
-
-
-const getContentObjArray = (contentString, limit, currentId=0) => {
-  console.log("getContentObjArray", contentString, limit, currentId);
-  let filledContent = "";
+const getContentObj = (contentString, limit, currentId=0, contentConsumedIndex=0) => {
+  //console.log("getContentObj", contentString, limit, currentId, contentConsumedIndex);
+  let runnerContent = "";
   let contentArr = [];
-  while(filledContent.length <= limit) {
-    filledContent += contentString + " ";
-  } filledContent = filledContent.substring(0,limit).trim();
-  let content = [...filledContent];
+  if(contentString.substring(contentConsumedIndex).length > limit){
+    runnerContent += contentString.substring(contentConsumedIndex,contentConsumedIndex+limit);
+    contentConsumedIndex = contentConsumedIndex + contentString.substring(contentConsumedIndex,contentConsumedIndex+limit).length;
+   // console.log("getContentObj : inside If ", limit, runnerContent, runnerContent.length, contentConsumedIndex);
+  }else {
+    runnerContent += contentString.substring(contentConsumedIndex);
+    contentConsumedIndex = 0;    
+    while(runnerContent.length <= limit){
+      //console.log("getContentObj : inside while of else  ", limit, runnerContent, runnerContent.length, contentConsumedIndex);
+      if(contentString.substring(contentConsumedIndex).length >= limit-runnerContent.length){
+        let endIndex = limit-runnerContent.length;
+        runnerContent += contentString.substring(contentConsumedIndex,endIndex) + " ";
+        contentConsumedIndex = contentConsumedIndex + contentString.substring(contentConsumedIndex,endIndex).length;
+      }
+      else {
+        runnerContent += contentString.substring(contentConsumedIndex) + " ";
+      }
+    }
+  }
+  
+  let content = [...runnerContent];
   for(let i=0; i < content.length ; i++){
     contentArr.push({
       char: content[i],
       id: currentId++
     });                  
   }
-  console.log("getContentObjArray Exit ", contentArr);
-  return contentArr;    
+  console.log("getContentObj Exit ", contentArr);
+  let contentObj = {contentArr : contentArr, contentConsumedIndex: contentConsumedIndex};
+  return contentObj;    
 }                      
 
 const exercise = (state = initialState, action) => {
   switch (action.type) {
     case START_COURSE:
-      let updatedProgress = {...state.progress, courseId: action.course.id, timePassed:0, enteredChar: '', status: "start", dynamicCurrentItemId: 0, currentItemId : 0, mistakes : 0}
+      let updatedProgress = {...state.progress, courseId: action.course.id, timePassed:0, enteredChar: '', status: "start", dynamicCurrentItemId: 0, currentItemId : 0, contentConsumedIndex: 0, mistakes : 0}
       return {...state,progress: updatedProgress, contentString: action.course.contentString}
     case START_TYPING:
       let updatedProgressStartTyping = {...state.progress, timePassed: 0, status: "inprogress", startTime: Date.now(), enteredChar: '', dynamicCurrentItemId: 0, currentItemId : 0, mistakes : 0}
-      return {...state, progress: updatedProgressStartTyping, content : getContentObjArray(state.contentString,runnerLimit), time : Number.parseInt(action.param.time), words:  Number.parseInt(action.param.words)}
+      let contentObj = getContentObj(state.contentString,runnerLimit);
+      return {...state, progress: updatedProgressStartTyping, content : contentObj.contentArr,contentConsumedIndex: contentObj.contentConsumedIndex,  time : Number.parseInt(action.param.time), words:  Number.parseInt(action.param.words)}
     case KEY_PRESSED:
       if(state.progress.status !== "inprogress"){
         return {...state};
@@ -59,7 +76,8 @@ const exercise = (state = initialState, action) => {
           mistakes: !moveIndicator ? state.progress.mistakes+1 : state.progress.mistakes,
           missedKeys: moveIndicator ? state.missedKeys : [].concat(state.missedKeys, String.fromCharCode(action.key))
         }
-        return {...state,progress: progressUpdated, content: getContentObjArray(state.contentString ,runnerLimit ,state.progress.currentItemId+1)}
+        let contentObj = getContentObj(state.contentString ,runnerLimit ,state.progress.currentItemId+1, state.contentConsumedIndex);
+        return {...state,progress: progressUpdated, content : contentObj.contentArr,contentConsumedIndex: contentObj.contentConsumedIndex}
       }
       else if(runnerCameToEnd && !state.timeMode && state.progress.currentItemId+1 < state.words ){
         progressUpdated = {...state.progress, 
@@ -69,19 +87,22 @@ const exercise = (state = initialState, action) => {
           mistakes: !moveIndicator ? state.progress.mistakes+1 : state.progress.mistakes,
           missedKeys: moveIndicator ? state.missedKeys : [].concat(state.missedKeys, String.fromCharCode(action.key))
         }
-        return {...state,progress: progressUpdated, content: getContentObjArray(state.contentString ,state.words-(state.progress.currentItemId+1) > runnerLimit ? runnerLimit : state.words-(state.progress.currentItemId+1),state.progress.currentItemId+1)}
+        let contentObj = getContentObj(state.contentString ,state.words-(state.progress.currentItemId+1) > runnerLimit ? runnerLimit : state.words-(state.progress.currentItemId+1),state.progress.currentItemId+1, state.contentConsumedIndex);
+        return {...state,progress: progressUpdated, content : contentObj.contentArr,contentConsumedIndex: contentObj.contentConsumedIndex}
       }else {
         let currentItemId = moveIndicator ? state.progress.currentItemId+1 : state.progress.currentItemId;
         let timeInMinutes = completed ? Math.round((Date.now()-state.progress.startTime)/60000) : 0;
+        let mistakes = !moveIndicator ? state.progress.mistakes+1 : state.progress.mistakes;
         progressUpdated = {...state.progress, 
                                   enteredChar : action.key, 
                                   currentItemId: currentItemId,
                                   dynamicCurrentItemId: moveIndicator ? state.progress.dynamicCurrentItemId+1 : state.progress.dynamicCurrentItemId,
-                                  mistakes: !moveIndicator ? state.progress.mistakes+1 : state.progress.mistakes,
+                                  mistakes: mistakes,
                                   missedKeys: moveIndicator ? state.missedKeys : [].concat(state.missedKeys, String.fromCharCode(action.key)),
                                   status: completed  ? "completed" : "inprogress",
                                   timeInMinutes : timeInMinutes,
-                                  speed: timeInMinutes > 0 ? Math.round(currentItemId/timeInMinutes) +'(cpm)': "No meaningful result. Type for longer than a minute"
+                                  speed: timeInMinutes > 0 ? Math.round((currentItemId/5)/timeInMinutes) +' (wpm)': "No meaningful result. Type for longer than a minute",
+                                  accuracy: Math.round((currentItemId/(currentItemId+mistakes))*100)
                                 };
       }
       return {...state,progress: progressUpdated};
@@ -97,7 +118,8 @@ const exercise = (state = initialState, action) => {
                                   status: completedTimePassed  ? "completed" : "inprogress",
                                   timeInMinutes : timeInMinutes,
                                   timePassed: timePassed,
-                                  speed: timeInMinutes > 0 ? Math.round(currentItemId/timeInMinutes) +'(cpm)': "No meaningful result. Type for longer than a minute"
+                                  speed: timeInMinutes > 0 ? Math.round((currentItemId/5)/timeInMinutes) +' (wpm)': "No meaningful result. Type for longer than a minute",
+                                  accuracy: Math.round((currentItemId/(currentItemId+state.progress.mistakes))*100)
                                 };
       return {...state,progress: progressUpdatedTimePassed};
     default:

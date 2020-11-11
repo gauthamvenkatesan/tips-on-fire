@@ -45,7 +45,7 @@ class home extends React.Component {
           <Container>
             <Form>
               <Form.Group controlId="time" onMouseUp={(e) => this.props.switchBoundaryMode(e.target.id)}  as={Row} >
-                <Form.Label column lg={1} >Time</Form.Label>
+                <Form.Label column lg={2} >Time (minutes)</Form.Label>
                 <Col lg={2}>
                   <Form.Control  disabled={!this.props.timeMode} as="select" onChange={(e) => time = e.target.value} defaultValue={this.props.time} >
                     <option>1</option>
@@ -55,11 +55,12 @@ class home extends React.Component {
                 </Col>
                 </Form.Group>
                 <Form.Group  controlId="words" onMouseUp={(e) => this.props.switchBoundaryMode(e.target.id)}  as={Row}>
-                  <Form.Label column lg={1}>Strokes</Form.Label>
+                  <Form.Label column lg={2}>Key Strokes</Form.Label>
                   <Col lg={2}>
                     <Form.Control  onChange={(e) => words = e.target.value} disabled={this.props.timeMode} as="select" defaultValue={this.props.time}>
                       <option>10</option>
                       <option>21</option>
+                      <option>70</option>
                       <option>500</option>
                       <option>1000</option>
                     </Form.Control>
@@ -75,29 +76,29 @@ class home extends React.Component {
             <h1>Results</h1>
             <h3>Total characters: {this.props.excerciseProgress.currentItemId+this.props.excerciseProgress.mistakes}</h3>
             <h3>Mistakes: {this.props.excerciseProgress.mistakes}</h3>
-            <h3>Total time: {this.props.excerciseProgress.timeInMinutes} (Minutes)</h3>
+            <h3>Total time: {this.props.excerciseProgress.timeInMinutes} {this.props.excerciseProgress.timeInMinutes > 1 ? '(Minutes)' : '(Minute)'} </h3>
             <h3>Speed: {this.props.excerciseProgress.speed}</h3>
-            <h3>Accuracy: {Math.round((this.props.excerciseProgress.currentItemId/(this.props.excerciseProgress.currentItemId+this.props.excerciseProgress.mistakes))*100)}%</h3>
+            <h3>Accuracy: {this.props.excerciseProgress.accuracy}%</h3>
             <Button onClick={() => this.props.startExcercise({time, words, timeMode})}>Restart</Button>
           </Container>
         </Jumbotron>
 
         <Alert variant="warning"> Welcome! Are you ready to set your fingers on fire !!</Alert>
-        <h6>Exercise Progress: {JSON.stringify(this.props.excerciseProgress)}</h6>
+        {/*<h6>Exercise Progress: {JSON.stringify(this.props.excerciseProgress)}</h6>*/}
         <Accordion defaultActiveKey="0">
-          {this.props.courseArr.map(e => { return (
-          <Card key={id++}>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                {e.group}
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <CourseCard inProgressCourseId={this.props.excerciseProgress.courseId} courseArr={e.category} OnClickHandler={this.props.courseClickHandler}/>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card> )})
+          {this.props.courseArr.map(e => { let eventKey= id++; return (
+            <Card key={id++}>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey={eventKey.toString()}>
+                  {e.group}
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey={eventKey.toString()}>
+                <Card.Body>
+                  <CourseCard inProgressCourseId={this.props.excerciseProgress.courseId} courseArr={e.category} OnClickHandler={this.props.courseClickHandler}/>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card> )})
         }
         </Accordion>
       </Container>

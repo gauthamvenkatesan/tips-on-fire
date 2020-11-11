@@ -16,12 +16,12 @@ const courses = (state = initialState, action) => {
     case SHOW_ADD_EXCERCISE:
       return {...state, showAddExercise: action.show}
     case ADD_CUSTOM_EXERCISE:
-      let courseCount = 0;
+      let courseCount = 1;
       let tempCourses = Array.from(state.courses);
       tempCourses.map(course => course.category.map( () => courseCount++));
       let customCourse = {id: courseCount+1, title: `${action.course.title}`, category: "custom", contentString: action.course.content};
       let modifiedCourses = tempCourses.map(course => {
-        if(course.group === "Custom Excercises") {
+        if(course.id === 3) {
            course.category.push(customCourse);
         }
         return course;  

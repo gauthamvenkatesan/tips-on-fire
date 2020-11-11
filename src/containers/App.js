@@ -18,6 +18,7 @@ const App = () => (
             <Route path="/help"> <Help/></Route>
             <Route path="/profile"> <Profile/></Route>
             <Route path="/login"> <Login/> </Route>
+            <Route path="/home"> <Home/></Route>
             <Route path="/"> <Home/></Route>
         </Switch>
     </Router>
