@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import Home from '../components/home'
 import {initApp, keyPressedEvent, startCourse, startTyping, showAddExcercise, addCustomExcercise, updateTimePassed, switchMode} from '../actions/action'
 
+
+var keypressHandlerFunc ;
 const mapStateToProps = (state, ownProps) => ({
   courseArr: state.courses.courses,
   runnerArr: state.exercise.content,
@@ -13,13 +15,21 @@ const mapStateToProps = (state, ownProps) => ({
   words: state.exercise.words
 })
 
+function keypressHandler(e){
+    this(keyPressedEvent(e.charCode));
+    e.preventDefault();
+};
 
 const registerforKeyPress = (dispatch) => {
-  document.addEventListener("keypress", e => {
-    dispatch(keyPressedEvent(e.charCode));
-    e.preventDefault();
-  })
+  console.log("addEventListenerVariableResult");
+  keypressHandlerFunc = keypressHandler.bind(dispatch);
+  document.addEventListener("keypress", keypressHandlerFunc,true)
 };
+
+const deRegisterforKeyPress = (dispatch) => {
+  let removeEventListenerVariableResult = document.removeEventListener("keypress", keypressHandlerFunc, true);
+  console.log("removeEventListenerVariableResult", removeEventListenerVariableResult);
+}
 
 var timer;
 const updateTime = (dispatch,time) => {
@@ -35,19 +45,23 @@ const courseClickHandler = (dispatch, course) => {
 const mapDispatchToProps = dispatch => ({
   initApp : message => {
     dispatch(initApp(dispatch))
-    registerforKeyPress(dispatch)
   },
   courseClickHandler: (course) => courseClickHandler(dispatch, course),
   startExcercise: (startParam) => {
     if(startParam.timeMode) 
       updateTime(dispatch, startParam.time);
-    dispatch(startTyping(startParam))},
+    registerforKeyPress(dispatch)  
+    dispatch(startTyping(startParam))
+  },
   onAddExcerciseSubmit: course => {
     dispatch(showAddExcercise(false));
     dispatch(addCustomExcercise(course));
   },
   onAddExcerciseClose: () => dispatch(showAddExcercise(false)),
-  stopExcercise:() => clearInterval(timer),
+  stopExcercise:() => {
+    clearInterval(timer);
+    deRegisterforKeyPress(dispatch)  
+  },
   switchBoundaryMode :(mode) => dispatch(switchMode(mode))
 })
 

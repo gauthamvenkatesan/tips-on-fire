@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import courses from './courses'
-import help from './help'
 import session from './session'
 import exercise from './exercise'
+import statistics from './statistics'
 
 export const getCoursebyId = (state,id) => {
   console.log("use this", state);
@@ -15,6 +15,7 @@ export const getCoursebyId = (state,id) => {
 export default combineReducers({
   courses,
   session,
-  exercise
+  exercise,
+  statistics
 })
 

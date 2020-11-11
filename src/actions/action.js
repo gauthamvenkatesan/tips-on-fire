@@ -1,5 +1,4 @@
-import React from 'react'
-import backend from '../api/backend'
+
 import * as types from '../constants/ActionTypes'
 import api from '../api/backend'
 

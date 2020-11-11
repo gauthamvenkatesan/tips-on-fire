@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Octicon, {Skip, Play, Plus} from '@primer/octicons-react'
 
 function coursecard ({courseArr, OnClickHandler, inProgressCourseId}) {
 
-  /*useEffect (() => {
+ /* useEffect (() => {
     window.scrollTo(0,0)
   },[])*/
 

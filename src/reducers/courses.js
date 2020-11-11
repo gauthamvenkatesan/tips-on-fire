@@ -17,17 +17,9 @@ const courses = (state = initialState, action) => {
       return {...state, showAddExercise: action.show}
     case ADD_CUSTOM_EXERCISE:
       let courseCount = 0;
-      let contentArr = [];
       let tempCourses = Array.from(state.courses);
       tempCourses.map(course => course.category.map( () => courseCount++));
-      let content = [...action.course.content];
-      for(let i=0; i < content.length ; i++){
-        contentArr.push({
-          char: content[i],
-          id: i
-        });
-      };
-      let customCourse = {id: `${courseCount+1}`, title: `${action.course.title}`, category: "custom", content: contentArr};
+      let customCourse = {id: courseCount+1, title: `${action.course.title}`, category: "custom", contentString: action.course.content};
       let modifiedCourses = tempCourses.map(course => {
         if(course.group === "Custom Excercises") {
            course.category.push(customCourse);

@@ -27,7 +27,7 @@ class home extends React.Component {
     return (
       <Container className="p-5">
         <AddExcercise show={this.props.showAddExercise} onHide={this.props.onAddExcerciseClose} onAddExcerciseSubmit={this.props.onAddExcerciseSubmit} customexcercise={this.props.customExcercise}></AddExcercise>
-        <Jumbotron tabIndex="1"   className={`no-outline ${this.props.excerciseProgress.status === "inprogress" ? "" : "d-none"} whiteboard`}>
+        <Jumbotron id="runner" tabIndex="1"   className={`no-outline ${this.props.excerciseProgress.status === "inprogress" ? "" : "d-none"} whiteboard`}>
           <Container>
             <div className="runnerContainer">
               {this.props.runnerArr.map( item => <span key={item.id} className={`runner-item ${this.props.excerciseProgress.currentItemId === item.id ? "current" : ""}`}>{item.char}</span> )}
@@ -41,14 +41,15 @@ class home extends React.Component {
             </Container>
           </Container>
         </Jumbotron>
-        <Jumbotron className={`${this.props.excerciseProgress.status === "start" ? "" : "d-none"} whiteboard`}>
+        <Jumbotron id="boundary" className={`${this.props.excerciseProgress.status === "start" ? "" : "d-none"} whiteboard`}>
           <Container>
             <Form>
               <Form.Group controlId="time" onMouseUp={(e) => this.props.switchBoundaryMode(e.target.id)}  as={Row} >
                 <Form.Label column lg={1} >Time</Form.Label>
                 <Col lg={2}>
-                  <Form.Control  disabled={!this.props.timeMode} as="select" disabled={!this.props.timeMode} onChange={(e) => time = e.target.value} defaultValue={this.props.time} >
+                  <Form.Control  disabled={!this.props.timeMode} as="select" onChange={(e) => time = e.target.value} defaultValue={this.props.time} >
                     <option>1</option>
+                    <option>2</option>
                     <option>3</option>
                   </Form.Control>
                 </Col>
@@ -69,14 +70,14 @@ class home extends React.Component {
           </Container>
         </Jumbotron>
 
-        <Jumbotron className={`${this.props.excerciseProgress.status === "completed" ? "" : "d-none"} whiteboard`}>
+        <Jumbotron id="results" className={`${this.props.excerciseProgress.status === "completed" ? "" : "d-none"} whiteboard`}>
           <Container>
             <h1>Results</h1>
-            <h3>Total letters: {this.props.runnerArr.length}</h3>
+            <h3>Total characters: {this.props.excerciseProgress.currentItemId+this.props.excerciseProgress.mistakes}</h3>
             <h3>Mistakes: {this.props.excerciseProgress.mistakes}</h3>
-            <h3>Total time: {Number.parseFloat(this.props.excerciseProgress.timeInMinutes).toPrecision(2)}</h3>
-            <h3>Speed: {Math.round(this.props.runnerArr.length/this.props.excerciseProgress.timeInMinutes)}</h3>
-            <h3>Accuracy: {Math.round(((this.props.runnerArr.length-this.props.excerciseProgress.mistakes)/this.props.runnerArr.length)*100)}</h3>
+            <h3>Total time: {this.props.excerciseProgress.timeInMinutes} (Minutes)</h3>
+            <h3>Speed: {this.props.excerciseProgress.speed}</h3>
+            <h3>Accuracy: {Math.round((this.props.excerciseProgress.currentItemId/(this.props.excerciseProgress.currentItemId+this.props.excerciseProgress.mistakes))*100)}%</h3>
             <Button onClick={() => this.props.startExcercise({time, words, timeMode})}>Restart</Button>
           </Container>
         </Jumbotron>
