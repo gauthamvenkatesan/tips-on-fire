@@ -2,7 +2,7 @@
  * Copyright (c) 2021 tipsonfire.com | Terms of Service | Privacy Policy
  */
 
-package com.browseronly.tipsonfire.util
+package com.web.tipsonfire.util
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray

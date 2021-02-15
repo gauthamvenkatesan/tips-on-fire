@@ -2,7 +2,7 @@ import {
   INIT, INIT_SUCCESS, SHOW_ADD_EXCERCISE, ADD_CUSTOM_EXERCISE
 } from '../constants/ActionTypes'
 
-const initialState = {showAddExercise: false,customExcercise: {title: "", content: ""},courses: [{"group":"Warm up", "category":[
+const initialState = {coursesLoaded:false, showAddExercise: false,customExcercise: {title: "", content: ""},courses: [{"group":"Warm up", "category":[
   {"id": 1, "title": "Home Row", "category": "practice"},
   {"id": 4, "title": "Home Row + numbers", "category": "practice"}
 ]}]};
@@ -12,7 +12,7 @@ const courses = (state = initialState, action) => {
     case INIT:
       return state;
     case INIT_SUCCESS:
-      return {...state,courses:action.initData};
+      return {...state,courses:action.initData,coursesLoaded:true};
     case SHOW_ADD_EXCERCISE:
       return {...state, showAddExercise: action.show}
     case ADD_CUSTOM_EXERCISE:

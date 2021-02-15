@@ -30,9 +30,14 @@ const header = (props) => (
     <Form.Text className="pr-3 light">
       <Link className="fc-light" to='/profile'>{props.username}</Link>
     </Form.Text>
-    <Button variant="primary" size="sm">
-      <Link className="fc-light" to='/login'>{props.loggedIn ? 'Log out': 'Login'}</Link>
-    </Button>
+    {!props.loggedIn ? 
+      (<Button variant="primary" size="sm">
+        <Link  className="fc-light" to='/login'>Login</Link>
+      </Button> ) : 
+      (<Button variant="primary" size="sm" onClick={() => props.logOutHandler()}>
+        Log out
+      </Button>)
+    }
   </Form>
 </Navbar.Collapse>
 </Navbar>

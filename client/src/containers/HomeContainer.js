@@ -6,13 +6,15 @@ import {initApp, keyPressedEvent, startCourse, startTyping, showAddExcercise, ad
 var keypressHandlerFunc ;
 const mapStateToProps = (state, ownProps) => ({
   courseArr: state.courses.courses,
+  coursesLoaded: state.courses.coursesLoaded,
   runnerArr: state.exercise.content,
   excerciseProgress: state.exercise.progress,
   showAddExercise: state.courses.showAddExercise,
   customExcercise: state.courses.customExcercise,
   timeMode: state.exercise.timeMode,
   time: state.exercise.time,
-  words: state.exercise.words
+  words: state.exercise.words,
+  username: state.session.username
 })
 
 function keypressHandler(e){

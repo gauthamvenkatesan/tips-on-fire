@@ -10,23 +10,23 @@ plugins {
 	kotlin("plugin.spring") version "1.4.21"
 }
 
-group = "com.browseronly"
+group = "com.web"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
-	mavenCentral()
+	jcenter()
 }
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	compileOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("com.google.code.gson:gson")
+	implementation("com.google.code.gson:gson")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+	implementation("com.arangodb:arangodb-spring-data:3.4.1")
+//	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-
 }
 
 tasks.withType<KotlinCompile> {

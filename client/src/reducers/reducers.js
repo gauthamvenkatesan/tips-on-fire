@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import courses from './courses'
 import session from './session'
 import exercise from './exercise'
+import alert from './alert'
 import statistics from './statistics'
 
 export const getCoursebyId = (state,id) => {
@@ -15,6 +16,7 @@ export const getCoursebyId = (state,id) => {
 export const help = (state = {helpText:""}, action) => {  return {...state,helpText: "HELPTEXT"} }
 
 export default combineReducers({
+  alert,
   courses,
   session,
   exercise,

@@ -6,13 +6,13 @@ import Container from 'react-bootstrap/Container'
 import Media from 'react-bootstrap/Media'
 import lockIcon from '../assets/lock.svg'
 
-const login = ({onClick, loggedIn, user}) => {
+const login = ({onSubmitEvent, loggedIn, user, singUpOnClick, showSignUp}) => {
     if(loggedIn){
         return <Redirect to="/"></Redirect>
     }
     return (
-    <Container className="-justify-content-center">
-        <Media>
+    <Container style={{backgroundColor:'whitish',display:"flex", alignItems:"center", justifyContent:"center"}} className="">
+        <Media style={{width:"100%"}}>
             <img
                 width={100}
                 height={100}
@@ -21,10 +21,20 @@ const login = ({onClick, loggedIn, user}) => {
                 alt="Lock"
             />
         <Media.Body>
-          <Form onSubmit={onClick}>
+          <Form noValidate validated={validated} onSubmit={onSubmitEvent}
+            validators={{
+                '': {
+                // Form-level validator
+                passwordsMatch: (vals) => vals.password === vals.confirmPassword,
+                },
+                // Field-level validators
+                password: { longEnough },
+                confirmPassword: { longEnough },
+          }}>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" autoComplete="username" onChange={e=> user.userId = e.target.value}/>
+                <Form.Control type="email" placeholder="Enter email" autoComplete="username" required onChange={e=> user.userId = e.target.value}/>
+                <Form.Control.Feedback>Looks good</Form.Control.Feedback>
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                 </Form.Text>
@@ -32,13 +42,26 @@ const login = ({onClick, loggedIn, user}) => {
 
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" autoComplete="current-password" onChange={e=> user.password = e.target.value}/>
+                <Form.Control type="password" placeholder="Password" autoComplete="current-password" required onChange={e=> user.password = e.target.value}/>
+                <Form.Control.Feedback>Looks good</Form.Control.Feedback>
             </Form.Group>
+            {showSignUp ? (
+                <Form.Group controlId="formBasicPasswordReEnter">
+                    <Form.Label>Confirm Password </Form.Label>
+                    <Form.Control type="password" placeholder="Password" onChange={e=> user.confirmPassword = e.target.value}/>
+                    <Form.Control.Feedback type="invalid">Password does not match</Form.Control.Feedback>
+                </Form.Group>) : ""
+            }
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Keep me signed in" title="Only select this option if no one else uses this device" onChange={e=> user.keepIn = e.target.value}/>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            {!showSignUp ? (
+            <Button className=" mr-5" variant="primary" type="submit">
                 Submit
+            </Button>
+            ): ""}
+            <Button className=" mr-5" variant="secondary" onClick={() => singUpOnClick(showSignUp)}>
+                SignUp
             </Button>
             </Form>
         </Media.Body>

@@ -7,6 +7,33 @@ export const loginUser = (dispatch,user) => {
   api.requestLogin(dispatch, loginSuccessHandler,user,1000);
 }
 
+export const logOut = () => {
+  return {type: types.LOGOUT}
+}
+
+export const signUpHandler = () => {
+  return {type: types.SIGNUP}
+}
+
+export const showAlert = (message) => {
+  return {type: types.SHOW_ALERT, message}
+}
+
+export const hideAlert = () => {
+  return {type: types.HIDE_ALERT}
+}
+
+
+export const signUpRequestHandler = (dispatch,user) => {
+  api.requestSignUp(dispatch, signUpSuccessHandler,user,1000);
+  return {type: types.SIGNUP_REQUEST}
+}
+
+const signUpSuccessHandler =(dispatch,user) => {
+  dispatch({type: types.SIGNUP_SUCCESS, user})
+}
+
+
 export const startTyping = (param) => {
   return {type: types.START_TYPING, param}
 }

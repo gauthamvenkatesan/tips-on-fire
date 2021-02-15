@@ -1,6 +1,10 @@
-package com.browseronly.tipsonfire.consumer;
+/*
+ * Copyright (c) 2021 tipsonfire.com | Terms of Service | Privacy Policy
+ */
 
-import com.browseronly.tipsonfire.util.getJsonDataFromAsset
+package com.web.tipsonfire.consumer;
+
+import com.web.tipsonfire.util.getJsonDataFromAsset
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

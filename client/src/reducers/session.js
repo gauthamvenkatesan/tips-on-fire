@@ -1,9 +1,11 @@
 import {
   LOGIN_SUCCESS,
-  LOGOUT 
+  LOGOUT,
+  SIGNUP,
+  SIGNUP_SUCCESS
 } from '../constants/ActionTypes'
 
-const initialState = {username:'UserName',loggedIn: false};
+const initialState = {username:'UserName',loggedIn: false, showSignUp: false};
 
 const session = (state = initialState, action) => {
   console.log("session reducer", action.type);
@@ -12,7 +14,11 @@ const session = (state = initialState, action) => {
       return {...state,username:"PETER VAN GEIT", loggedIn: true};
     case LOGOUT:
       return initialState;
-      default:
+    case SIGNUP:
+        return {...initialState, showSignUp: true}
+    case SIGNUP_SUCCESS:
+        return {...initialState, showSignUp: false}
+    default:
       return state;
   }
 }

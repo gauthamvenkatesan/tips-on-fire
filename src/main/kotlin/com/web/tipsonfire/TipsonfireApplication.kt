@@ -1,4 +1,8 @@
-package com.browseronly.tipsonfire
+/*
+ * Copyright (c) 2021 tipsonfire.com | Terms of Service | Privacy Policy
+ */
+
+package com.web.tipsonfire
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
