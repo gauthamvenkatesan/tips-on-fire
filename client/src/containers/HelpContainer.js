@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Help from '../components/help'
 
 
 const HelpContainer = (props) => (
@@ -12,4 +13,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(HelpContainer)
+)(Help)

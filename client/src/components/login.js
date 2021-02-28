@@ -1,15 +1,16 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Media from 'react-bootstrap/Media'
 import lockIcon from '../assets/lock.svg'
 
-const login = ({onSubmitEvent, loggedIn, user, singUpOnClick, showSignUp}) => {
+const login = ({onSubmitEvent, loggedIn, user, singUpOnClick,resetLoginHandler, showSignUp, validated}) => {
     if(loggedIn){
         return <Redirect to="/"></Redirect>
     }
+    const longEnough = (val) => val && val.length > 8;
     return (
     <Container style={{backgroundColor:'whitish',display:"flex", alignItems:"center", justifyContent:"center"}} className="">
         <Media style={{width:"100%"}}>
@@ -21,7 +22,7 @@ const login = ({onSubmitEvent, loggedIn, user, singUpOnClick, showSignUp}) => {
                 alt="Lock"
             />
         <Media.Body>
-          <Form noValidate validated={validated} onSubmit={onSubmitEvent}
+          <Form validated={validated} noValidate onSubmit={onSubmitEvent}
             validators={{
                 '': {
                 // Form-level validator
@@ -33,7 +34,14 @@ const login = ({onSubmitEvent, loggedIn, user, singUpOnClick, showSignUp}) => {
           }}>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" autoComplete="username" required onChange={e=> user.userId = e.target.value}/>
+                <Form.Control type="email" placeholder="Enter email" autoComplete="username" required onChange={e=> user.userId = e.target.value}
+                 validators={{
+                    required: (val) => val && val.length,
+                 }}
+                 
+                 errors ={{
+                     required: (val) => !val && !val.length
+                 }}/>
                 <Form.Control.Feedback>Looks good</Form.Control.Feedback>
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
@@ -63,6 +71,9 @@ const login = ({onSubmitEvent, loggedIn, user, singUpOnClick, showSignUp}) => {
             <Button className=" mr-5" variant="secondary" onClick={() => singUpOnClick(showSignUp)}>
                 SignUp
             </Button>
+            {showSignUp ? 
+                <Link className=" mr-5" to="/Login" onClick={() => resetLoginHandler()}>Take me to login</Link> : ""
+            }
             </Form>
         </Media.Body>
         </Media>

@@ -11,16 +11,20 @@ export const logOut = () => {
   return {type: types.LOGOUT}
 }
 
-export const signUpHandler = () => {
-  return {type: types.SIGNUP}
+export const showSignUpHandler = () => {
+  return {type: types.SHOW_SIGNUP}
 }
 
-export const showAlert = (message) => {
-  return {type: types.SHOW_ALERT, message}
+export const showAlert = (message,variant) => {
+  return {type: types.SHOW_ALERT, message:message, variant:variant}
 }
 
 export const hideAlert = () => {
   return {type: types.HIDE_ALERT}
+}
+
+export const resetLogin = () => {
+  return {type: types.RESET_LOGIN}
 }
 
 
@@ -72,6 +76,15 @@ export const initApp = dispatch => {
 
 export const initSuccess = (initData) => {
   return {type: types.INIT_SUCCESS, initData}
+}
+
+export const getProfileRequest = dispatch => {
+  api.getMemberProfile(dispatch)
+  dispatch({type: types.GET_PROFILE_REQUEST})
+}
+
+export const getProfileSuccess = (profileData) => {
+  return {type: types.GET_PROFILE_SUCCESS, profileData}
 }
 
 export const logout = () => (dispatch, getState) => {

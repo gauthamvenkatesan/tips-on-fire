@@ -11,7 +11,6 @@ import AlertMessage from './AlertMessageContainer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/app.css'
 
-
 const App = () => (
     <Router history={createBrowserHistory()}> 
         <Header/>

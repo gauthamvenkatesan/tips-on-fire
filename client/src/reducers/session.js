@@ -1,8 +1,9 @@
 import {
   LOGIN_SUCCESS,
   LOGOUT,
-  SIGNUP,
-  SIGNUP_SUCCESS
+  SHOW_SIGNUP,
+  SIGNUP_SUCCESS,
+  RESET_LOGIN
 } from '../constants/ActionTypes'
 
 const initialState = {username:'UserName',loggedIn: false, showSignUp: false};
@@ -14,10 +15,12 @@ const session = (state = initialState, action) => {
       return {...state,username:"PETER VAN GEIT", loggedIn: true};
     case LOGOUT:
       return initialState;
-    case SIGNUP:
+    case SHOW_SIGNUP:
         return {...initialState, showSignUp: true}
     case SIGNUP_SUCCESS:
-        return {...initialState, showSignUp: false}
+        return {...initialState, showSignUp: false, loggedIn: false}
+    case RESET_LOGIN:
+        return initialState;    
     default:
       return state;
   }

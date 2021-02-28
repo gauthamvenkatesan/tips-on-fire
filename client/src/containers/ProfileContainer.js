@@ -1,15 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Profile from '../components/profile'
+import {getProfileRequest} from '../actions/action'
 
-const ProfileContainer = (props) => (
-  <Profile></Profile>
-)
 
 const mapStateToProps = (state) => ({
-  products: state
+  KeysErrorPecentage_data: state.profileInfo.KeysErrorPecentage_data
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  profileRequest : () => getProfileRequest(dispatch)
 })
 
 export default connect(
-  mapStateToProps
-)(ProfileContainer)
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile)

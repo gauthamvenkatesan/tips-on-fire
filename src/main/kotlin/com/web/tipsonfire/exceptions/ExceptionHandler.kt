@@ -21,4 +21,12 @@ class ProductExceptionController {
         }
         return ResponseEntity("Tips On Fire Exception Handler", HttpStatus.INTERNAL_SERVER_ERROR)
     }
+
+    @ExceptionHandler(value = [UnAuthenticatedException::class])
+    fun unAuthenticatedExceptionHandler(exception: UnAuthenticatedException?): ResponseEntity<Any> {
+        if(exception  != null ){
+            return ResponseEntity(CommonResponse("", exception.message,responseBody = ""), HttpStatus.UNAUTHORIZED)
+        }
+        return ResponseEntity("Unauthorized Exception Handler", HttpStatus.INTERNAL_SERVER_ERROR)
+    }
 }

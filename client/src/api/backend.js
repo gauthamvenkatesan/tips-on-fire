@@ -3,19 +3,33 @@
  */
 import _courses from './courses.json'
 import * as ACTION from '../actions/action.js'
+import {ALERT_VARIANTS} from '../constants/CommonConstants.js'
 
 export default {
-  requestLogin: (dispatch, cb, user ,timeout) => postDataEncoded("http://localhost:8080/login", new URLSearchParams({
+  requestLogin: (dispatch, callback, user ,timeout) => postDataEncoded("http://localhost:8080/login", new URLSearchParams({
                                                           'userName': user.userId,
                                                           'password': window.btoa(user.password),
                                                           'keepMeIn': user.keepMeIn
-                                                        })).then(data => {console.log(data); cb(dispatch,_courses)}),
+                                                        })).then(data => {
+                                                            console.log(data);
+                                                            callback(dispatch,_courses)})
+                                                          .catch(error => {
+                                                            console.log("error response"+ error.message);
+                                                            dispatch(ACTION.showAlert("Incorrect username password",ALERT_VARIANTS.DANGER))}
+                                                          ),
   requestSignUp: (dispatch, callback, user ) => postDataEncoded("http://localhost:8080/signUp", new URLSearchParams({
                                                           'userName': user.userId,
                                                           'password': window.btoa(user.password),
                                                           'keepMeIn': false
-                                                        })).then(data => {console.log("success "+data); callback(dispatch,data)}).catch(error => {console.log("error "+error.message); dispatch(ACTION.showAlert(error.message)) }),
-  getCourses: (dispatch) => getData("http://localhost:8080/courses").then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error))
+                                                        })).then(data => {
+                                                            console.log("success "+data);
+                                                            dispatch(ACTION.showAlert(data.serverResponse,ALERT_VARIANTS.SUCCESS));
+                                                            callback(dispatch,data)})
+                                                          .catch(error => {
+                                                            console.log("error "+error.message);
+                                                            dispatch(ACTION.showAlert(error.message,ALERT_VARIANTS.DANGER))}),
+  getCourses: (dispatch) => getData("http://localhost:8080/courses").then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error)),
+  getMemberProfile: (dispatch) => getData("http://localhost:8080/profile").then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error))
 }
 
 //eslint-disable-next-line

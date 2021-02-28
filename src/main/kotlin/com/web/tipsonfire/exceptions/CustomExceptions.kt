@@ -5,3 +5,5 @@
 package com.web.tipsonfire.exceptions
 
 class TipsOnFireException(message:String): Exception(message)
+
+class UnAuthenticatedException(message: String): Exception(message)

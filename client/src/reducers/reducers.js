@@ -4,6 +4,7 @@ import session from './session'
 import exercise from './exercise'
 import alert from './alert'
 import statistics from './statistics'
+import profileInfo from './profileInfo'
 
 export const getCoursebyId = (state,id) => {
   console.log("use this", state);
@@ -21,6 +22,7 @@ export default combineReducers({
   session,
   exercise,
   statistics,
-  help
+  help,
+  profileInfo
 })
 
