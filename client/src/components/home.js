@@ -11,6 +11,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Jumbotron from 'react-bootstrap/Jumbotron'
+import {useNavigate}  from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 function Home (props) {
 
@@ -28,7 +30,14 @@ function Home (props) {
   useEffect (() => {
     window.scrollTo(0,0);
   }, [courseStatus]);
- 
+
+  
+  const isAuthenticated = !!Cookies.get('auth');
+  const navigate = useNavigate();
+  if(isAuthenticated) {
+    dispatch(resumeSession());
+    navigate('/home');
+  } 
     
   return (
       <Container className="p-5">

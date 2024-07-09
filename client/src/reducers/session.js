@@ -1,29 +1,49 @@
-import {
-  LOGIN_SUCCESS,
+import { createSlice } from '@reduxjs/toolkit'
+
+export const session = createSlice({
+    name: 'session',
+    initialState: {username:'Gaut',loggedIn: false, showSignUp: false},
+    reducers: {
+      LOGIN_SUCCESS: (state, action) => {
+        const userData = {
+          username,
+          password,
+        };
+        userData.username = action.username;
+        const expirationTime = new Date(new Date().getTime() + 60000);
+        Cookies.set('auth', JSON.stringify(userData), { expires: expirationTime });
+        state.username = action.username,
+        state.loggedIn = true;
+      }, 
+      RESUME_SESSION: (state) => {
+        const userSessionCookie =JSON.parse(Cookies.get('auth'));
+        state.username=userSessionCookie.username,
+        state.loggedIn = true;
+      },
+      LOGOUT: (state) => {
+        Cookies.remove('auth');
+        state.loggedIn = false;
+      },
+      SHOW_SIGNUP: (state) => {
+        state.showSignUp = true
+      },
+      SIGNUP_SUCCESS: (state) => {
+        state.showSignUp = false;
+        state.loggedIn = false;
+      },
+      RESET_LOGIN: (state) => {
+        state.loggedIn = false;
+      },        
+              
+    },
+  })
+
+export const {   LOGIN_SUCCESS,
+  RESUME_SESSION,
   LOGOUT,
   SHOW_SIGNUP,
   SIGNUP_SUCCESS,
-  RESET_LOGIN
-} from '../constants/ActionTypes'
+  RESET_LOGIN } = session.actions
 
-const initialState = {username:'UserName',loggedIn: false, showSignUp: false};
+export default session.reducer
 
-const session = (state = initialState, action) => {
-  console.log("session reducer", action.type);
-  switch (action.type) {
-    case LOGIN_SUCCESS:
-      return {...state,username:"PETER VAN GEIT", loggedIn: true};
-    case LOGOUT:
-      return initialState;
-    case SHOW_SIGNUP:
-        return {...initialState, showSignUp: true}
-    case SIGNUP_SUCCESS:
-        return {...initialState, showSignUp: false, loggedIn: false}
-    case RESET_LOGIN:
-        return initialState;    
-    default:
-      return state;
-  }
-}
-
-export default session

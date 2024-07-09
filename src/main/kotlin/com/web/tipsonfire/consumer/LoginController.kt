@@ -4,20 +4,20 @@
 
 package com.web.tipsonfire.consumer
 
-import com.arangodb.springframework.core.ArangoOperations
+import UserDAO
 import com.web.tipsonfire.model.CommonResponse
 import com.web.tipsonfire.model.LoginForm
 import com.web.tipsonfire.operations.AuthenticationService
-import com.web.tipsonfire.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class LoginController (@Autowired
-             var repo : UserRepository,
-                       var arangoOperations: ArangoOperations ){
+class LoginController(
+    @Autowired
+    var repo: UserDAO
+){
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/login")

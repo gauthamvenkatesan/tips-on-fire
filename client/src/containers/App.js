@@ -1,6 +1,5 @@
 import React from 'react'
-import {Router, Route, Switch} from 'react-router-dom';
-import {createBrowserHistory} from 'history'
+import {Routes, Router, Route} from 'react-router-dom';
 
 import Help from './HelpContainer'
 import Home from './HomeContainer'
@@ -10,19 +9,15 @@ import Login from './LoginContainer'
 import AlertMessage from './AlertMessageContainer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/app.css'
+import { Outlet } from "react-router-dom";
 
 const App = () => (
-    <Router history={createBrowserHistory()}> 
+    <div className="App">
         <Header/>
         <AlertMessage/>
-        <Switch>
-            <Route path="/help"> <Help/></Route>
-            <Route path="/profile"> <Profile/></Route>
-            <Route path="/login"> <Login/> </Route>
-            <Route path="/home"> <Home/></Route>
-            <Route path="/"> <Home/></Route>
-        </Switch>
-    </Router>
+        <Outlet />      
+               
+    </div>
 )
 
 export default App

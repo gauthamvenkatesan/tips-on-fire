@@ -1,27 +1,45 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
-import { createLogger } from 'redux-logger'
-import thunk from 'redux-thunk'
-import reducer from './reducers/reducers'
 import App from './containers/App'
+import Login from './components/login'
+import Profile from './components/profile'
+import Help from './components/help'
+import Home from './components/home'
+import ReactDOM from 'react-dom/client';
+import {createBrowserRouter,  RouterProvider} from "react-router-dom";
+import {store} from './store';
+import ErrorPage from './components/errorPage';
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+    errorElement: <ErrorPage/>,  
+    children:[
+        {
+          path: "/login",
+          element: <Login/>,
+        },
+        {
+          path: "/profile",
+          element: <Profile/>,
+        },
+        { 
+          path: "/help",
+          element: <Help/>,
+        },
+        {
+          path: "/home",
+          element: <Home/>,
+        }
+    ]
+  }
+]);
 
-const middleware = [ thunk ];
-if (process.env.NODE_ENV === 'production') {
-  middleware.push(createLogger());
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(
-    applyMiddleware(...middleware)
- ));
-
-
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </React.StrictMode>
+);

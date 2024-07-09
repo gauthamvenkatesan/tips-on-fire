@@ -1,18 +1,19 @@
-import { KEY_PRESSED } from '../constants/ActionTypes';
-
-const initialState = {daysPractised:[], keyStats:{}}
+import { createSlice } from '@reduxjs/toolkit'
 const intialKeyStat = {char:"a",missed:0,gradeInPercentage:100}
-const statistics = (state = initialState, action) => {
-    switch (action.type) {
-        case KEY_PRESSED:
+export const statistics = createSlice({
+    name: 'statistics',
+    initialState: {daysPractised:[], keyStats:{}},
+    reducers: {
+        KEY_PRESSED: (state, action) => {
             let stats = {...state.keyStats};
-            let keyStat = stats[action.key] !== {} ? intialKeyStat : stats[action.key];
+            let keyStat = isNaN(stats[action.key]) ? intialKeyStat : stats[action.key];
             keyStat.char =  String.fromCharCode(action.key);
             console.log("Inside statistics keyPress", action, state, keyStat);
-            return {...state, keyStats: stats}
-        default:
-            return state;     
-    }
-}
+            state.keyStats = stats;
+        }        
+    },
+  })
 
-export default statistics;
+export const {  KEY_PRESSED } = statistics.actions
+
+export default statistics.reducer

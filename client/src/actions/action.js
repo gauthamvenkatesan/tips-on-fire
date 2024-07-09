@@ -7,6 +7,10 @@ export const loginUser = (dispatch,user) => {
   api.requestLogin(dispatch, loginSuccessHandler,user,1000);
 }
 
+export const resumeSession = () => {  
+  return {type: types.RESUME_SESSION}
+}
+
 export const logOut = () => {
   return {type: types.LOGOUT}
 }
@@ -34,6 +38,7 @@ export const signUpRequestHandler = (dispatch,user) => {
 }
 
 const signUpSuccessHandler =(dispatch,user) => {
+  dispatch({type: types.HIDE_ALERT})
   dispatch({type: types.SIGNUP_SUCCESS, user})
 }
 
@@ -62,6 +67,7 @@ export const startCourse = (course) => {
   return{type: types.START_COURSE, course}
 }
 const loginSuccessHandler = (dispatch,user) => {
+  dispatch({type: types.HIDE_ALERT})
   dispatch({type: types.LOGIN_SUCCESS, user})
 }
 
@@ -74,7 +80,7 @@ export const initApp = dispatch => {
   dispatch({type: types.INIT})
 }
 
-export const initSuccess = (initData) => {
+export const initSuccess = (initData) => {  
   return {type: types.INIT_SUCCESS, initData}
 }
 

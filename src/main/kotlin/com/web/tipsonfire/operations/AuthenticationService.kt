@@ -4,25 +4,24 @@
 
 package com.web.tipsonfire.operations
 
-import com.arangodb.ArangoCursor
-import com.web.tipsonfire.dto.Users
+import UserDAO
+import com.web.tipsonfire.dto.User
 import com.web.tipsonfire.exceptions.TipsOnFireException
 import com.web.tipsonfire.exceptions.UnAuthenticatedException
 import com.web.tipsonfire.model.CommonResponse
 import com.web.tipsonfire.model.LoginForm
-import com.web.tipsonfire.repository.UserRepository
-import org.springframework.data.domain.Example
+
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
 
 @Service
-class AuthenticationService (val usersRepo: UserRepository){
+class AuthenticationService (val usersRepo: UserDAO){
 
     fun authenticate(loginForm: LoginForm): CommonResponse {
        var authenticated:Boolean = false
         //val foundUser = usersRepo.findAll(Example.of(user))
-        val foundUser:Iterable<Users?>? = usersRepo.findByName(loginForm.userName, null)
+        val foundUser:Iterable<User?>? = usersRepo.findByName(loginForm.userName)
         if (foundUser != null) {
             for( user1 in foundUser){
                 if (user1 != null) {
@@ -45,7 +44,7 @@ class AuthenticationService (val usersRepo: UserRepository){
     }
 
     fun signUp(loginForm: LoginForm): CommonResponse? {
-        val foundUser:Iterable<Users?>? = usersRepo.findByName(loginForm.userName, null)
+        val foundUser:Iterable<User?>? = usersRepo.findByName(loginForm.userName)
         if (foundUser != null) {
             for( user1 in foundUser){
                 println("Users retrieved ${user1.toString()}")
@@ -53,7 +52,7 @@ class AuthenticationService (val usersRepo: UserRepository){
             }
         }
         println("User not found ${loginForm.userName}, proceed to on board")
-        val user = Users( null, loginForm.userName, "67",loginForm.password , LocalDateTime.now())
+        val user = User( null, loginForm.userName, 67,loginForm.password , LocalDateTime.now())
         usersRepo.save(user)
         println("User Saved  ${user.toString()}");
         if(user.id != null) {

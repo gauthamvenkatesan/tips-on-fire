@@ -1,15 +1,12 @@
 import React from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Media from 'react-bootstrap/Media'
 import lockIcon from '../assets/lock.svg'
 
-const login = ({onSubmitEvent, loggedIn, user, singUpOnClick,resetLoginHandler, showSignUp, validated}) => {
-    if(loggedIn){
-        return <Redirect to="/"></Redirect>
-    }
+const login = ({onSubmitEvent, loggedIn, user, singUpOnClick,resetLoginHandler, showSignUp, validated}) => {    
     const longEnough = (val) => val && val.length > 8;
     return (
     <Container style={{backgroundColor:'whitish',display:"flex", alignItems:"center", justifyContent:"center"}} className="">

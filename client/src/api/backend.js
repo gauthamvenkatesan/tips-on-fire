@@ -4,9 +4,10 @@
 import _courses from './courses.json'
 import * as ACTION from '../actions/action.js'
 import {ALERT_VARIANTS} from '../constants/CommonConstants.js'
+import resorceConstants from '../constants/ResourceConstants.json'
 
 export default {
-  requestLogin: (dispatch, callback, user ,timeout) => postDataEncoded("http://localhost:8080/login", new URLSearchParams({
+  requestLogin: (dispatch, callback, user ,timeout) => postDataEncoded(getRemoteUrl(resorceConstants.restUrl.login), new URLSearchParams({
                                                           'userName': user.userId,
                                                           'password': window.btoa(user.password),
                                                           'keepMeIn': user.keepMeIn
@@ -17,7 +18,7 @@ export default {
                                                             console.log("error response"+ error.message);
                                                             dispatch(ACTION.showAlert("Incorrect username password",ALERT_VARIANTS.DANGER))}
                                                           ),
-  requestSignUp: (dispatch, callback, user ) => postDataEncoded("http://localhost:8080/signUp", new URLSearchParams({
+  requestSignUp: (dispatch, callback, user ) => postDataEncoded(getRemoteUrl(resorceConstants.restUrl.signup), new URLSearchParams({
                                                           'userName': user.userId,
                                                           'password': window.btoa(user.password),
                                                           'keepMeIn': false
@@ -28,9 +29,21 @@ export default {
                                                           .catch(error => {
                                                             console.log("error "+error.message);
                                                             dispatch(ACTION.showAlert(error.message,ALERT_VARIANTS.DANGER))}),
-  getCourses: (dispatch) => getData("http://localhost:8080/courses").then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error)),
-  getMemberProfile: (dispatch) => getData("http://localhost:8080/profile").then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error))
+  getCourses: (dispatch) => getData(getRemoteUrl(resorceConstants.restUrl.courses)).then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error)),
+  getMemberProfile: (dispatch) => getData(getRemoteUrl(resorceConstants.restUrl.profile)).then(response => response.json()).then(data => dispatch(ACTION.initSuccess(data))).catch(error => console.error('fetching courses failed:' ,error))
 }
+
+//Get Remote Url from env config
+const getRemoteUrl = (path) => {
+  let remoteUrl;
+  try {    
+    remoteUrl = process.env.REACT_APP_API_URL + path;
+  } catch (ex) {
+    remoteUrl = path;
+  }
+  return remoteUrl;
+};
+
 
 //eslint-disable-next-line
 async function postData(url = '', data = {}) {

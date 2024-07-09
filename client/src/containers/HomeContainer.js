@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Home from '../components/home'
-import {initApp, keyPressedEvent, startCourse, startTyping, showAddExcercise, addCustomExcercise, updateTimePassed, switchMode} from '../actions/action'
+import {initApp, keyPressedEvent, startCourse, startTyping, showAddExcercise, addCustomExcercise, updateTimePassed, switchMode, resumeSession} from '../actions/action'
 
 
 var keypressHandlerFunc ;
@@ -16,6 +16,7 @@ const mapStateToProps = (state, ownProps) => ({
   words: state.exercise.words,
   username: state.session.username
 })
+
 
 function keypressHandler(e){
     this(keyPressedEvent(e.charCode));

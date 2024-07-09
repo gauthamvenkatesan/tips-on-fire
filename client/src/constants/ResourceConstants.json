@@ -1,0 +1,25 @@
+{
+    "restUrl": {
+      "login": "/v1/auth/login",
+      "signup":"/v1/auth/signUp",
+      "courses":"/v1/courses",
+      "profile":"/v1/profile"
+    },
+    "seo": {
+      "domain": "https://test.com",
+      "siteName": "Test",
+      "defaultTitle": "Test | Fast Engineering Eco-Systems with No Compromise",
+      "defaultDescription": "Build and transform your software products with Pellerex scalable engineering solutions and save months of product development time.",
+      "contact": {
+        "email": "info@test.com",
+        "phone": "+61 2 816238786"
+      },
+      "address": {
+        "streetAddress": "U7 678 Orouke Rd",
+        "addressLocality": "RedFern",
+        "addressRegion": "NSW",
+        "addressCountry": "Australia",
+        "postalCode": "2000"
+      }
+    }
+  }
