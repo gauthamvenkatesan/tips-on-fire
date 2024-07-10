@@ -5,14 +5,14 @@ import Container from 'react-bootstrap/Container'
 const help = props => {
   return (
     <Container className="p-5">
-      <h2>Help</h2>
+      <h2>{props.helpText}</h2>
       <hr/>
     </Container>
   )
 }
 
-help.propTypes = {
-  
+help.propTypes = {  
+  helpText: PropTypes.string.isRequired
 }
 
 export default help

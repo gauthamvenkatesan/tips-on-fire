@@ -77,11 +77,11 @@ export const keyPressedEvent = (key) => {
 
 export const initApp = dispatch => {
   api.getCourses(dispatch);
-  dispatch({type: types.INIT})
+  dispatch({type: types.HELP_INIT})
 }
 
 export const initSuccess = (initData) => {  
-  return {type: types.INIT_SUCCESS, initData}
+  return {type: types.COURSE_LOAD_SUCCESS, initData}
 }
 
 export const getProfileRequest = dispatch => {

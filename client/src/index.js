@@ -1,10 +1,10 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import App from './containers/App'
-import Login from './components/login'
-import Profile from './components/profile'
-import Help from './components/help'
-import Home from './components/home'
+import Login from './containers/LoginContainer'
+import Profile from './containers/ProfileContainer'
+import Help from './containers/HelpContainer'
+import Home from './containers/HomeContainer'
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter,  RouterProvider} from "react-router-dom";
 import {store} from './store';

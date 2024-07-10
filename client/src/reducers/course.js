@@ -1,13 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export const getCoursebyId = (state,id) => {
+  console.log("use this", state);
+  let courseObj;
+  state.courses.courses.map( group => group.category.map( course => {courseObj = course.id === id? course: undefined; return course}))
+  console.log("getCourse ", id, courses, courseObj);
+  return courseObj;
+};
+
 export const course = createSlice({
-    name: 'alert',
+    name: 'course',
     initialState: {coursesLoaded:false, showAddExercise: false,customExcercise: {title: "", content: ""},courses: [{"group":"Warm up", "category":[
       {"id": 1, "title": "Home Row", "category": "practice"},
       {"id": 4, "title": "Home Row + numbers", "category": "practice"}
     ]}]},
     reducers: {
-      INIT_SUCCESS: (state, action) => {
+      LOAD_SUCCESS: (state, action) => {
         state.courses = action.initData
         state.coursesLoaded =true
       },
@@ -30,5 +38,5 @@ export const course = createSlice({
     },
   })
 
-export const {  INIT_SUCCESS, SHOW_ADD_EXCERCISE, ADD_CUSTOM_EXERCISE} = course.actions
+export const {  LOAD_SUCCESS, SHOW_ADD_EXCERCISE, ADD_CUSTOM_EXERCISE} = course.actions
 export default course.reducer

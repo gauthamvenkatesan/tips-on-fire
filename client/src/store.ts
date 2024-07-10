@@ -1,15 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import courses from './reducers/courses'
+import course from './reducers/course'
 import session from './reducers/session'
 import exercise from './reducers/exercise'
 import alert from './reducers/alert'
 import statistics from './reducers/statistics'
 import profile from './reducers/profile'
-
-/*if (process.env.NODE_ENV === 'production') {
-  middleware.push(createLogger());
-}*/
+import help from './reducers/help'
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
@@ -20,7 +17,10 @@ export type AppDispatch = typeof store.dispatch
 
 const store = configureStore(rootReducer, composeEnhancers(
     applyMiddleware(...middleware)
- ));*/
+ ));
+ /*if (process.env.NODE_ENV === 'production') {
+  middleware.push(createLogger());
+}*/
 
 
 export const store = configureStore({
@@ -28,8 +28,9 @@ export const store = configureStore({
     alert: alert,
     session:session,
     profile:profile,
-    courses:courses,
+    course:course,
     exercise:exercise,
     statistics:statistics,
+    help:help,
   }    
 });
